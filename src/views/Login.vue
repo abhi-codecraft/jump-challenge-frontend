@@ -36,7 +36,8 @@
 </template>
 <script setup>
 const loginWithGoogle = () => {
-  window.location.href = "http://localhost:3000/auth/google";
+    const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;
+    window.location.href = `${baseUrl}/auth/google`;
 };
 </script>
 <style scoped>
