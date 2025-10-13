@@ -1,17 +1,19 @@
 name: Azure Static Web Apps CI/CD
 
+# Only trigger on pushes or PRs targeting master
 on:
   push:
     branches:
       - master
   pull_request:
-    types: [opened, synchronize, reopened, closed]
     branches:
       - master
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    # Only run for pushes or PRs to master
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -20,12 +22,13 @@ jobs:
           submodules: true
           lfs: false
 
-      # Install dependencies
-      - name: Install Node.js
+      # Setup Node 20
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # or your project Node version
+          node-version: '20'
 
+      # Install dependencies
       - name: Install Dependencies
         run: npm install
 
@@ -33,6 +36,7 @@ jobs:
       - name: Build for Live
         run: npm run build:live
 
+      # Deploy to Azure
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -40,7 +44,6 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ORANGE_ROCK_0BD3EA100 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/"           # Your app source code
-          api_location: ""            # Optional
-          output_location: "dist"     # Make sure this matches your build:live output folder
-
+          app_location: "/"       # Your app source code
+          api_location: ""        # Optional
+          output_location: "dist" # Must match build folder
