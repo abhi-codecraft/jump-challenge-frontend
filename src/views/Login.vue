@@ -14,7 +14,7 @@
             Sign in to access your secure, personalized assistant experience.
         </p>
         
-        <button id="google-sign-in-btn" class="w-full flex items-center justify-center px-6 py-3 rounded-xl shadow-md text-lg font-bold transition duration-150">
+        <button id="google-sign-in-btn" @click="loginWithGoogle" class="w-full flex items-center justify-center px-6 py-3 rounded-xl shadow-md text-lg font-bold transition duration-150">
             
             <!-- Google SVG Icon: Wrapped in a white, circular container to make it pop against the blue button -->
             <div class="w-8 h-8 mr-3 flex items-center justify-center bg-white rounded-full p-1">
@@ -34,6 +34,11 @@
     </div>
     </div>
 </template>
+<script setup>
+const loginWithGoogle = () => {
+  window.location.href = "http://localhost:3000/auth/google";
+};
+</script>
 <style scoped>
  /* General styling for a clean, centered look */
         #login-screen{

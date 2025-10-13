@@ -1,5 +1,46 @@
 <template>
   <div>
+    <header class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                <h1 class="text-xl font-semibold text-gray-900">Ask Anything</h1>
+                <button 
+                class="text-gray-400 hover:text-gray-600 transition flex items-center"
+                @click="logout"
+                >
+                <!-- Logout Icon -->
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"></path>
+                </svg>
+                Logout
+                </button>
+
+            </div>
+            <div class="flex items-center justify-between pb-3">
+                <div class="flex space-x-4">
+                    <button class="text-sm font-medium text-blue-600 border-b-2 border-blue-600 pb-1">Chat</button>
+                    <button class="text-sm font-medium text-gray-500 hover:text-gray-700 pb-1">History</button>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <!-- NEW: Connect Hubspot Button -->
+                    <button class="flex items-center text-sm font-medium px-3 py-1 bg-white border border-gray-300 text-gray-600 rounded-full hover:bg-gray-50 transition shadow-sm">
+                        <!-- Hubspot Icon Placeholder (e.g., brief case or link icon) -->
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                        Connect Hubspot
+                    </button>
+                    
+                    <!-- New Thread Button -->
+                    <button class="flex items-center text-sm font-medium text-gray-600 hover:text-blue-600 transition">
+                        <!-- Plus Icon -->
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        New thread
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
     <main id="chat-content" class="flex-grow overflow-y-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
         <div class="max-w-3xl mx-auto">
             
@@ -143,3 +184,40 @@
   </div>
 
 </template>
+<script setup>
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "../../axiosInstance";
+
+
+const user = ref(null);
+const router = useRouter();
+
+const logout = async () => {
+  try {
+    // Call your backend logout endpoint
+    await axios.post("/auth/logout", {}, { withCredentials: true });
+
+    // Clear any frontend state if needed
+    localStorage.removeItem("user");
+
+    // Redirect to login page
+    router.push("/login");
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
+};
+
+onMounted(async () => {
+  try {
+    const res = await axios.get("/auth/me", {
+      withCredentials: true, // important for session cookies
+    });
+    user.value = res.data; // store user info
+  } catch (err) {
+    console.log("User not logged in or session expired");
+    user.value = null;
+    router.push("/login");
+  }
+});
+</script>
