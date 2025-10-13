@@ -46,4 +46,6 @@ jobs:
           action: "upload"
           app_location: "."
           output_location: "dist" # Must match build folder
+          skip_app_build: true
+
 
