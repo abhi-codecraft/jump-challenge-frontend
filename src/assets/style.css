@@ -1,0 +1,70 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background-color: #f7f8fc;
+  /* Light background */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Fixed Footer styling for mobile/desktop */
+footer {
+  /* Fixes the footer to the bottom of the screen */
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background-color: white;
+  /* Ensures content doesn't bleed through */
+  padding: 1rem;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  /* Subtle shadow on top edge */
+}
+
+/* Fixed Header styling for mobile */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  /* Subtle shadow on bottom edge */
+}
+
+/* Custom scrollbar for better aesthetics */
+/* Note: This might not work on all browsers, but improves aesthetics where supported */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  /* slate-300 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f5f9;
+  /* slate-100 */
+}
+
+/* Dynamic Textarea Height (CSS only approximation for initial load) */
+textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 3rem;
+  max-height: 200px;
+  /* Prevent it from growing too large */
+}
+
+/* Styling for the sticky date separators */
+.date-separator {
+  position: sticky;
+  top: 4.5rem;
+  /* Puts it just below the header */
+  z-index: 5;
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #f7f8fc;
+  /* Match body background */
+}
