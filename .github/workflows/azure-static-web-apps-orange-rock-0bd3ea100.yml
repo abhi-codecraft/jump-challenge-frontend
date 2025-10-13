@@ -24,7 +24,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # or your project Node version
+          node-version: '20'  # or your project Node version
 
       - name: Install Dependencies
         run: npm install
@@ -43,3 +43,4 @@ jobs:
           app_location: "/"           # Your app source code
           api_location: ""            # Optional
           output_location: "dist"     # Make sure this matches your build:live output folder
+
