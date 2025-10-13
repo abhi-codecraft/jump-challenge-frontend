@@ -185,9 +185,9 @@
 
 </template>
 <script setup>
+import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "../../axiosInstance";
 
 
 const user = ref(null);
