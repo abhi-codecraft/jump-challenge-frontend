@@ -32,15 +32,27 @@
                     <span>Settings</span>
                 </router-link>
 
-                <router-link 
-                    to="/logout" 
+                <a
+                    href="#" 
+                    @click="logout"
                     class="flex items-center space-x-3 p-3 rounded-xl transition"
                     active-class="bg-indigo-50 text-indigo-700 font-semibold"
                 >
                     <i class="fa-solid fa-right-from-bracket w-5 h-5"></i>
                     <span>Logout</span>
-                </router-link>
+            </a>
 
             </nav>
         </aside>
 </template>
+<script setup>
+import axios from "../../axiosIntance";
+
+function logout() {
+  // Clear token from axios headers
+  delete axios.defaults.headers.common["Authorization"];
+
+  // Redirect to login page
+  window.location.href = "/login";
+}
+</script>
